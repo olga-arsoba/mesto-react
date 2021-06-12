@@ -1,39 +1,30 @@
 import React from 'react'
 import rectangle from '../images/vector_rectangle.svg'
-import api from '../utils/api'
 import Card from './Card'
+import {CurrentUserContext} from '../contexts/CurrentUserContext'
 
 function Main(props) {
-    const {onEditAvatar, onEditProfile, onAddPlace, onCardClick} = props
-    const [userName, setUserName] = React.useState('')
-    const [userDescription, setUserDescription] = React.useState('')
-    const [userAvatar, setUserAvatar] = React.useState('')
-    const [cards, setCards] = React.useState([])
+    const currentUser = React.useContext(CurrentUserContext)
+    const {onEditAvatar, onEditProfile, onAddPlace, onCardClick, cards, onCardLike, onCardDelete} = props
 
-    React.useEffect(() => {
-        Promise.all([
-            api.getUserInfo(),
-            api.getInitialCards()
-        ]).then(([ userInfo, cards ]) => {
-            setUserName(userInfo.name)
-            setUserDescription(userInfo.about)
-            setUserAvatar(userInfo.avatar)
-            setCards(cards)
-        }).catch((err) => {
-            console.error(err)
-        })
-    }, [])
+    const handleCardLike = (card) => {
+        onCardLike(card)
+    }
+
+    const handleCardDelete = (card) => {
+        onCardDelete(card)
+    }
 
     return(
         <main className="content">
             <section className="profile">
                 <div onClick={onEditAvatar} className="profile__avatar-edit">
-                    <img src={userAvatar} alt="" className="profile__avatar" />
+                    <img src={currentUser.avatar} alt="" className="profile__avatar" />
                 </div>
                 <div onClick={onEditProfile} className="profile__info">
-                    <h1 className="profile__name">{userName}</h1>
+                    <h1 className="profile__name">{currentUser.name}</h1>
                     <button type="button" id="edit-profile" className="profile__button-edit"></button>
-                    <h2 className="profile__occupation">{userDescription}</h2>
+                    <h2 className="profile__occupation">{currentUser.about}</h2>
                 </div>
 
                 <button onClick={onAddPlace} type="button" id="add-card" className="profile__button-add">
@@ -48,6 +39,8 @@ function Main(props) {
                         card={card}
                         key={card._id}
                         onCardClick={onCardClick}
+                        onCardLike={handleCardLike}
+                        onCardDelete={handleCardDelete}
                     />
                 ))}
 

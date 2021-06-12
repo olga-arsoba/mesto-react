@@ -75,6 +75,14 @@ class Api {
         }
         return Promise.reject(`Ошибка: ${res.status}`)
     }
+
+    changeLikeCardStatus (cardId, isLiked) {
+        if (isLiked) {
+            return this.likeCard(cardId)
+        } else {
+            return this.deleteLikeCard(cardId)
+        }
+    }
 }
 
 const api = new Api({

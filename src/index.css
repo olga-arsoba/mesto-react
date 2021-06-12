@@ -43,3 +43,5 @@
 @import url(blocks/element/__like-amount/element__like-amount.css);
 @import url(blocks/element/__like-wrapper/element__like-wrapper.css);
 @import url(blocks/profile/__avatar-edit/profile__avatar-edit.css);
+@import url(blocks/element/__trash/_hidden/element__trash_hidden.css);
+@import url(blocks/element/__trash/_visible/element__trash_visible.css);
