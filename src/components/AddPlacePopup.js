@@ -16,6 +16,9 @@ function AddPlacePopup(props) {
         onAddCard({
             link,
             name: title,
+        }).then(() => {
+            setTitle('')
+            setLink('')
         })
     }
     return(

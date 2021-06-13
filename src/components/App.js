@@ -72,7 +72,7 @@ function App() {
     }
 
     const handleAddCard = (card) => {
-        api.addCard(card).then((newCard) => {
+        return api.addCard(card).then((newCard) => {
             setCards([newCard, ...cards])
             closeAllPopups()
         }).catch((err) => {
